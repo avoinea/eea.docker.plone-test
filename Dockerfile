@@ -1,4 +1,4 @@
-FROM plone:4
+FROM plone:5
 MAINTAINER "EEA: IDM2 A-Team" <eea-edw-a-team-alerts@googlegroups.com>
 
 USER root
