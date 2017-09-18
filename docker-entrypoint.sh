@@ -8,8 +8,11 @@ if [ -z "$GIT_BRANCH" ]; then
 fi
 
 if [ ! -z "$DEVELOP" ]; then
-  GIT=`echo https://github.com/$DEVELOP | sed 's/src/eea/g'`
-  git clone -v $GIT --branch=$GIT_BRANCH $DEVELOP
+  if [ ! -d $DEVELOP ]; then
+    GIT=`echo https://github.com/$DEVELOP | sed 's/src/eea/g'`
+    git clone -v $GIT --branch=$GIT_BRANCH $DEVELOP
+  fi
+
   if [ -e "custom.cfg" ]; then
     echo -e "[versions]" >> custom.cfg
     for addon in $ADDONS; do
