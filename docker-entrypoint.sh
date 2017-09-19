@@ -8,10 +8,12 @@ if [ -z "$GIT_BRANCH" ]; then
 fi
 
 if [ ! -z "$DEVELOP" ]; then
-  if [ ! -d $DEVELOP ]; then
-    GIT=`echo https://github.com/$DEVELOP | sed 's/src/eea/g'`
-    git clone -v $GIT --branch=$GIT_BRANCH $DEVELOP
-  fi
+  for dev in $DEVELOP; do
+    if [ ! -d $dev ]; then
+      GIT=`echo https://github.com/$dev | sed 's/src/eea/g'`
+      git clone -v $GIT --branch=$GIT_BRANCH $dev
+    fi
+  done
 
   if [ -e "custom.cfg" ]; then
     echo -e "[versions]" >> custom.cfg
