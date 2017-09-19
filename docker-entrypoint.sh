@@ -11,7 +11,11 @@ if [ ! -z "$DEVELOP" ]; then
   GIT=`echo https://github.com/$DEVELOP | sed 's/src/eea/g'`
   git clone -v $GIT --branch=$GIT_BRANCH $DEVELOP
   if [ -e "custom.cfg" ]; then
-    echo -e "\n[versions]\n$ADDONS = >0.9\n" >> custom.cfg
+    echo -e "[versions]" >> custom.cfg
+    for addon in $ADDONS; do
+      addon="$(echo $addon | sed 's|\[.*\]||g')"
+      echo -e "$addon = >0.9" >> custom.cfg
+    done
   fi
 fi
 
