@@ -32,4 +32,4 @@ if [[ "$1" == "-"* ]]; then
   exec bin/test "$@"
 fi
 
-exec "$@"
+exec /plone-entrypoint.sh "$@"
