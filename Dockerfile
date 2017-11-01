@@ -7,7 +7,8 @@ RUN runDeps="curl git gcc libc-dev ImageMagick ghostscript libmagickcore-6.q16-2
  && apt-get update \
  && apt-get install -y --no-install-recommends $runDeps \
  && rm -rf /var/lib/apt/lists/* \
- && mv develop.cfg develop-plone.cfg
+ && mv develop.cfg develop-plone.cfg \
+ && mv /docker-entrypoint.sh /plone-entrypoint.sh
 
 USER plone
 COPY develop.cfg /plone/instance/
