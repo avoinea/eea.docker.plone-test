@@ -7,11 +7,18 @@ if [ -z "$GIT_BRANCH" ]; then
   GIT_BRANCH="master"
 fi
 
+LOCATION=$(pwd)
 if [ ! -z "$DEVELOP" ]; then
   for dev in $DEVELOP; do
     if [ ! -d $dev ]; then
       GIT=`echo https://github.com/$dev | sed 's/src/eea/g'`
-      git clone -v $GIT --branch=$GIT_BRANCH $dev
+      git clone -v $GIT $dev
+      cd $dev
+      if [ ! -z "$GIT_CHANGE_ID" ]; then
+        git fetch origin pull/$GIT_CHANGE_ID/head:$GIT_BRANCH
+      fi
+      git checkout $GIT_BRANCH
+      cd $LOCATION
     fi
   done
 
