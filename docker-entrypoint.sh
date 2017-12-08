@@ -20,7 +20,7 @@ if [ ! -z "$DEVELOP" ]; then
   for dev in $DEVELOP; do
     if [ ! -d $dev ]; then
       GIT=`echo $GIT_URL/$dev | sed "s|src|$GIT_USER|g"`
-      echo "Cloning $GIT"
+      echo "Cloning from $GIT"
       git clone -v $GIT $dev
       cd $dev
       if [ ! -z "$GIT_CHANGE_ID" ]; then
