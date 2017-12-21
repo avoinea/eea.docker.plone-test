@@ -24,6 +24,7 @@ if [ ! -z "$DEVELOP" ]; then
       git clone -v $GIT $dev
       cd $dev
       if [ ! -z "$GIT_CHANGE_ID" ]; then
+        GIT_BRANCH=PR-${GIT_CHANGE_ID}
         git fetch origin pull/$GIT_CHANGE_ID/head:$GIT_BRANCH
       fi
       git checkout $GIT_BRANCH
