@@ -13,6 +13,7 @@ RUN runDeps="curl git gcc libc-dev ImageMagick ghostscript libmagickcore-6.q16-2
 
 USER plone
 COPY develop.cfg /plone/instance/
-RUN /plone/Python-2.7/bin/python bootstrap.py -c develop.cfg
+RUN /plone/Python-2.7/bin/pip install pip==9.0.3 \
+ && /plone/Python-2.7/bin/python bootstrap.py -c develop.cfg
 RUN bin/buildout -c develop.cfg
 COPY docker-entrypoint.sh /
