@@ -3,7 +3,7 @@ MAINTAINER "EEA: IDM2 A-Team" <eea-edw-a-team-alerts@googlegroups.com>
 
 USER root
 
-RUN runDeps="curl git gcc libc-dev ImageMagick ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev" \
+RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $runDeps \
  && rm -rf /var/lib/apt/lists/* \
