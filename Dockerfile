@@ -11,5 +11,5 @@ RUN runDeps="curl git gcc libc-dev imagemagick ghostscript libmagickcore-6.q16-2
 
 COPY develop.cfg /plone/instance/
 COPY docker-entrypoint.sh /
-RUN curl -O https://raw.githubusercontent.com/eea/eea.docker.kgs/96974-plone-4.3.17/src/plone/versions.cfg \
+RUN curl -O https://raw.githubusercontent.com/eea/eea.docker.kgs/master/src/plone/versions.cfg \
  && buildout -c develop.cfg
