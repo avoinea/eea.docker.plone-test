@@ -36,7 +36,7 @@ if [ ! -z "$DEVELOP" ]; then
     echo -e "[versions]" >> custom.cfg
     for addon in $ADDONS; do
       addon="$(echo $addon | sed 's|\[.*\]||g')"
-      echo -e "$addon = >0.9" >> custom.cfg
+      echo -e "$addon =" >> custom.cfg
     done
   fi
 fi
