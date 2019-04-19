@@ -48,7 +48,8 @@ if [[ "$1" == "zptlint"* ]]; then
 fi
 
 if [ -e "custom.cfg" ]; then
-  gosu plone buildout -c custom.cfg
+  buildout -c custom.cfg
+  chown -R plone:plone /plone
 fi
 
 if [[ "$1" == "-"* ]]; then
