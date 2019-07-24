@@ -1,4 +1,4 @@
-FROM plone:5
+FROM plone/plone:5-python2
 MAINTAINER "EEA: IDM2 A-Team" <eea-edw-a-team-alerts@googlegroups.com>
 
 RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev" \
@@ -9,5 +9,6 @@ RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graph
  && mv /docker-entrypoint.sh /plone-entrypoint.sh
 
 COPY develop.cfg /plone/instance/
-RUN gosu plone buildout -c develop.cfg
+RUN buildout -c develop.cfg \
+ && chown -R plone:plone /plone
 COPY docker-entrypoint.sh /
