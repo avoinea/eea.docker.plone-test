@@ -1,4 +1,4 @@
-FROM plone/plone:5.2rc1
+FROM plone/plone:5
 LABEL maintainer="EEA: IDM2 A-Team <eea-edw-a-team-alerts@googlegroups.com>"
 
 RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev" \
@@ -9,7 +9,6 @@ RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graph
  && mv /docker-entrypoint.sh /plone-entrypoint.sh
 
 COPY develop.cfg /plone/instance/
-RUN sed -i "s|Products.DocFinderTab||g" develop-plone.cfg
-RUN buildout -c develop.cfg
-RUN chown -R plone /plone
+RUN buildout -c develop.cfg \
+ && chown -R plone /plone
 COPY docker-entrypoint.sh /
