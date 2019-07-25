@@ -1,4 +1,4 @@
-FROM plone/plone:5
+FROM plone:5
 LABEL maintainer="EEA: IDM2 A-Team <eea-edw-a-team-alerts@googlegroups.com>"
 
 RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev" \
