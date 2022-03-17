@@ -36,13 +36,39 @@ Docker Image optimized for running tests over Plone Add-ons
                  -e GIT_BRANCH=PR-50 \
             eeacms/plone-test -s eea.facetednavigation
 
+## Testing with coverage and xunit reports
 
+Xunit xml report files are saved in the container, in the path `/plone/instance/parts/xmltestreport/testreports/`
+
+Coverage report is saved in the `/plone/instance/src/$GIT_NAME/coverage.xml` file
+
+### Docker command
+
+    $ docker run -it --name=plonetest \
+                 -e ADDONS="eea.facetednavigation" \
+                 -e DEVELOP="src/eea.facetednavigation" \
+                 -e GIT_NAME="eea.facetednavigation" \
+            eeacms/plone-test coverage
+
+> We are keeping the container `Stopped` and will delete it after we copy the reports
+
+### Copy from docker container
+
+    $ mkdir xunit-reports
+    $ docker cp plonetest:/plone/instance/parts/xmltestreport/testreports/. xunit-reports/
+    $ docker cp plonetest:/plone/instance/src/eea.facetednavigation/coverage.xml coverage.xml
+    
+### Clean-up
+
+    $ docker rm -v plonetest
+    
 ## Supported environment variables
 
 * `GIT_BRANCH` Run tests over the provided git branch (e.g.: `GIT_BRANCH=develop`). Default: `master`
 * `GIT_CHANGE_ID` Run tests over a github pull-request (e.g.: `GIT_CHANGE_ID=PR-5`. Default: `<not-set>`
 * `GIT_REMOTE_URL` Override git remote (e.g.: `GIT_REMOTE_URL=https://bitbucket.org`). Default: `https://github.com`. Experimental
 * `GIT_USER` Override git user (e.g.: `GIT_USER=collective`). Default: `eea`
+* `GIT_NAME` Used in coverage testing, to set the tested addon
 * All Plone [supported environment variables](https://github.com/plone/plone.docker#supported-environment-variables)
 
 
