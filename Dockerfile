@@ -9,6 +9,7 @@ RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graph
  && mv /docker-entrypoint.sh /plone-entrypoint.sh
 
 COPY develop.cfg /plone/instance/
+
 RUN buildout -c develop.cfg \
  && chown -R plone /plone
 COPY docker-entrypoint.sh /
