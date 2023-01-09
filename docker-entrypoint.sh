@@ -15,6 +15,9 @@ if [ -z "$GIT_USER" ]; then
   GIT_USER="eea"
 fi
 
+echo "Running: pip install typing==3.10.0.0"
+pip install typing==3.10.0.0
+
 LOCATION=$(pwd)
 if [ ! -z "$DEVELOP" ]; then
   for dev in $DEVELOP; do
