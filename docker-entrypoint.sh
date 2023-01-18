@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-gosu plone python /docker-initialize.py
+
+#gosu plone python /app/docker-initialize.py
+
+
 
 if [ -z "$GIT_URL" ]; then
   GIT_URL="https://github.com"
@@ -15,11 +18,16 @@ if [ -z "$GIT_USER" ]; then
   GIT_USER="eea"
 fi
 
+cd /app/
+
+
 LOCATION=$(pwd)
 if [ ! -z "$DEVELOP" ]; then
   for dev in $DEVELOP; do
+    dev=$(echo "$dev" | sed 's#/app/##')	  
     if [ ! -d $dev ]; then
       GIT=`echo $GIT_URL/$dev | sed "s|src|$GIT_USER|g"`
+      echo $dev
       echo "Cloning from $GIT"
       gosu plone git clone -v $GIT $dev
       cd $dev
@@ -65,4 +73,4 @@ if [[ "$1" == "-"* ]]; then
   exec bin/test "$@"
 fi
 
-exec /plone-entrypoint.sh "$@"
+exec /app/plone-entrypoint.sh "$@"

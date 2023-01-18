@@ -1,14 +1,15 @@
-FROM plone:python2
+FROM plone/plone-backend:6.0
 LABEL maintainer="EEA: IDM2 A-Team <eea-edw-a-team-alerts@googlegroups.com>"
 
-RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev g++" \
+COPY requirements.txt /app/
+
+RUN runDeps="curl git build-essential libldap2-dev libsasl2-dev"  \
  && apt-get update \
  && apt-get install -y --no-install-recommends $runDeps \
  && rm -rf /var/lib/apt/lists/* \
- && mv develop.cfg develop-plone.cfg \
- && mv /docker-entrypoint.sh /plone-entrypoint.sh
+ && mv /app/docker-entrypoint.sh /app/plone-entrypoint.sh \
+ && chmod 777 /app/ \
+ &&  pip wheel -r requirements.txt --wheel-dir=/wheelhouse ${PIP_PARAMS}
 
-COPY develop.cfg /plone/instance/
-RUN buildout -c develop.cfg \
- && chown -R plone:plone /plone
-COPY docker-entrypoint.sh /
+COPY docker-entrypoint.sh /app/
+USER root
