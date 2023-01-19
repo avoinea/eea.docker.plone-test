@@ -40,37 +40,20 @@ if [ ! -z "$DEVELOP" ]; then
     fi
   done
 
-  if [ -e "custom.cfg" ]; then
-    echo -e "[versions]" >> custom.cfg
-    for addon in $ADDONS; do
-      addon="$(echo $addon | sed 's|\[.*\]||g')"
-      echo -e "$addon =" >> custom.cfg
+fi
+
+if [[ "$@" == "start" ]] || [ $# -eq 0 ]; then
+  if [ -n "$DEVELOP" ]; then
+    for dev in $DEVELOP; do
+      if [ -d $dev ]; then
+        dev=$(echo "$dev" | sed 's#/app/##')
+        echo "Running tests for $dev"
+        args="bin/zope-testrunner --auto-color --auto-progress --test-path /app/$dev"
+	/app/plone-entrypoint.sh bin/zope-testrunner --auto-color --auto-progress --test-path /app/$dev
+      fi
     done
   fi
+else
+   exec /app/plone-entrypoint.sh "$@"
 fi
 
-if [[ "$1" == "zptlint"* ]]; then
-  echo "Running bin/zptlint src/"
-  find src -regex ".*\.[c|z]*pt" -print0 | xargs -0 -r bin/zptlint
-  exit
-fi
-
-if [ -e "custom.cfg" ]; then
-  gosu plone buildout -c custom.cfg
-fi
-
-
-if [[ "$1" == "coverage"* ]]; then
-    cd src/$GIT_NAME
-    pwd
-    ls ../../bin
-    ../../bin/coverage run ../../bin/xmltestreport --test-path $(pwd) -v -vv -s $GIT_NAME
-    ../../bin/report xml --include=*$GIT_NAME*
-    exit 0
-fi
-
-if [[ "$1" == "-"* ]]; then
-  exec bin/test "$@"
-fi
-
-exec /app/plone-entrypoint.sh "$@"
