@@ -1,6 +1,10 @@
 FROM plone:python2
 LABEL maintainer="EEA: IDM2 A-Team <eea-edw-a-team-alerts@googlegroups.com>"
 
+RUN sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list \
+ && sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list \
+ && sed -i '/stretch-updates/d' /etc/apt/sources.list
+
 RUN runDeps="curl git gcc libc-dev ghostscript libmagickcore-6.q16-2-extra graphviz libjpeg62-turbo-dev g++" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $runDeps \
