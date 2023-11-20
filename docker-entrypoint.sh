@@ -49,7 +49,7 @@ if [[ "$@" == "start" ]] || [ $# -eq 0 ]; then
         dev=$(echo "$dev" | sed 's#/app/##')
         echo "Running tests for $dev"
         args="bin/zope-testrunner --auto-color --auto-progress --test-path /app/$dev"
-	/app/plone-entrypoint.sh bin/zope-testrunner --auto-color --auto-progress --coverage --test-path /app/$dev
+	/app/plone-entrypoint.sh bin/zope-testrunner --auto-color --auto-progress --coverage /app/coverage --test-path /app/$dev
       fi
     done
   fi
